@@ -590,30 +590,28 @@
     }
   }
 
-  // Footer
-  .pricing-footer {
-    width: 100%;
-    max-width: 1210px;
-    margin-top: -1rem;
-  }
-
-  .guarantee-badges {
+  // Trust Strip
+  .trust-strip {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 1210px;
   }
 
-  .guarantee-item {
+  .trust-badge {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
     background: rgba($primary-color, 0.03);
-    border: 1px solid rgba($primary-color, 0.08);
+    border: 1px solid rgba($primary-color, 0.1);
     border-radius: 10px;
-    font-size: 0.85rem;
-    color: rgba($white-text-color, 0.6);
+    color: rgba($white-text-color, 0.7);
+    font-size: $font-size-sm;
+    font-weight: 500;
     transition: all 0.3s ease;
 
     // stylelint-disable-next-line no-descending-specificity
@@ -623,9 +621,14 @@
     }
 
     &:hover {
+      color: $white-text-color;
       background: rgba($primary-color, 0.06);
       border-color: rgba($primary-color, 0.15);
     }
+  }
+
+  .trust-divider {
+    display: none;
   }
 
   // Slide fade transition
@@ -679,13 +682,34 @@
       justify-self: center;
     }
 
-    .guarantee-badges {
-      flex-flow: row wrap;
+    .trust-strip {
+      flex-direction: row;
+      align-items: center;
       justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem 2rem;
+      background: rgba($primary-color, 0.03);
+      border: 1px solid rgba($primary-color, 0.1);
+      border-radius: 100px;
     }
 
-    .guarantee-item {
-      flex: 0 0 auto;
+    .trust-badge {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+
+      &:hover {
+        background: transparent;
+        border-color: transparent;
+      }
+    }
+
+    .trust-divider {
+      display: block;
+      width: 1px;
+      height: 16px;
+      background: rgba($primary-color, 0.2);
     }
   }
 
@@ -776,8 +800,8 @@
       }
     }
 
-    .guarantee-badges {
-      gap: 1.5rem;
+    .trust-strip {
+      gap: 2rem;
     }
 
     .contract-note {

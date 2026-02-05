@@ -119,22 +119,7 @@
         </p>
       </Transition>
 
-      <div class="pricing-footer">
-        <div class="guarantee-badges">
-          <div class="guarantee-item">
-            <Icon name="mdi:shield-check" />
-            <span>30-day money-back guarantee</span>
-          </div>
-          <div class="guarantee-item">
-            <Icon name="mdi:lock-outline" />
-            <span>Secure payment via Stripe</span>
-          </div>
-          <div class="guarantee-item">
-            <Icon name="mdi:headset" />
-            <span>Free consultation included</span>
-          </div>
-        </div>
-      </div>
+      <nuc-trust-badges :items="trustItems" />
     </div>
 
     <Dialog
@@ -158,6 +143,12 @@ import type { BillingPeriod, PricingPlan } from './types'
 const showDialog = ref(false)
 const activeCategory = ref('customer')
 const billingPeriod = ref<BillingPeriod>('one-time')
+
+const trustItems = [
+  { icon: 'mdi:shield-check', label: '30-day money-back guarantee' },
+  { icon: 'mdi:lock-outline', label: 'Secure payment via Stripe' },
+  { icon: 'mdi:headset', label: 'Free consultation included' },
+]
 
 const currentPlans = computed(() => {
   const category = pricingCategories.find((c) => c.id === activeCategory.value)
