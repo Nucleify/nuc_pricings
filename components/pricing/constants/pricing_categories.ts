@@ -1,4 +1,4 @@
-import type { PricingCategory } from './types'
+import type { PricingCategory } from '../types'
 
 export const pricingCategories: PricingCategory[] = [
   {

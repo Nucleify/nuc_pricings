@@ -80,7 +80,7 @@
             <div class="plan-price">
               <div class="price-row">
                 <span class="currency">{{ plan.currency }}</span>
-                <span class="amount">{{ formatPrice(getPrice(plan)) }}</span>
+                <span class="amount">{{ formatPrice(getPrice(plan, billingPeriod)) }}</span>
               </div>
               <span class="period">{{ billingPeriod === 'monthly' ? 'per month' : 'one-time payment' }}</span>
             </div>
@@ -104,7 +104,7 @@
               :label="plan.popular ? 'Get Started →' : 'Choose Plan'"
               class="plan-button"
               :class="{ primary: plan.popular }"
-              :href="getLink(plan)"
+              :href="getLink(plan, billingPeriod)"
               target="_blank"
             />
           </div>
@@ -122,52 +122,33 @@
       <nuc-trust-badges :items="trustItems" />
     </div>
 
-    <Dialog
-      v-model:visible="showDialog"
-      :modal="true"
-      :dismissable-mask="true"
-      :draggable="false"
-      :show-header="false"
-    >
-      <nuc-section-email-us @success="showDialog = false" />
-    </Dialog>
+    <client-only>
+      <Dialog
+        v-model:visible="showDialog"
+        :modal="true"
+        :dismissable-mask="true"
+        :draggable="false"
+        :show-header="false"
+      >
+        <nuc-section-email-us @success="showDialog = false" />
+      </Dialog>
+    </client-only>
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { pricingCategories } from './plans'
-import type { BillingPeriod, PricingPlan } from './types'
+import { pricingCategories, trustItems } from './constants'
+import type { BillingPeriod } from './types'
+import { formatPrice, getLink, getPrice } from './utils'
 
 const showDialog = ref(false)
 const activeCategory = ref('customer')
 const billingPeriod = ref<BillingPeriod>('one-time')
 
-const trustItems = [
-  { icon: 'mdi:shield-check', label: '30-day money-back guarantee' },
-  { icon: 'mdi:lock-outline', label: 'Secure payment via Stripe' },
-  { icon: 'mdi:headset', label: 'Free consultation included' },
-]
-
 const currentPlans = computed(() => {
   const category = pricingCategories.find((c) => c.id === activeCategory.value)
   return category?.plans || []
 })
-
-function getPrice(plan: PricingPlan): number {
-  return billingPeriod.value === 'monthly'
-    ? plan.monthlyPrice
-    : plan.oneTimePrice
-}
-
-function getLink(plan: PricingPlan): string {
-  return billingPeriod.value === 'monthly'
-    ? plan.monthlyLink || '#'
-    : plan.oneTimeLink || '#'
-}
-
-function formatPrice(price: number): string {
-  return price.toLocaleString('en-US')
-}
 </script>
