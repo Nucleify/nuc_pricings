@@ -3,10 +3,7 @@
     <div class="pricing-glow"></div>
     <div class="pricing-container container">
       <div class="pricing-header">
-        <span class="pricing-badge">
-          <Icon name="mdi:tag-outline" />
-          <span>PRICING PLANS</span>
-        </span>
+        <nuc-shiny-badge icon="mdi:tag-outline" label="PRICING PLANS" />
         <h2 class="pricing-heading">
           Choose the perfect plan for
           <span class="highlight">your journey.</span>
@@ -14,10 +11,11 @@
         <p class="pricing-description">
           Flexible pricing that scales with your needs. No hidden fees. <span class="vat-note">VAT included.</span>
         </p>
-        <button class="ask-sticker" @click="showDialog = true">
-          <Icon name="mdi:message-text-outline" />
-          <span>Need help choosing? <strong>Let's talk!</strong></span>
-        </button>
+        <nuc-section-email-us-dialog 
+          button-class="ask-sticker"
+          button-label="Need help choosing?"
+          button-strong="Let's talk!"
+        />
       </div>
 
       <div class="pricing-controls">
@@ -121,18 +119,6 @@
 
       <nuc-trust-badges :items="trustItems" />
     </div>
-
-    <client-only>
-      <Dialog
-        v-model:visible="showDialog"
-        :modal="true"
-        :dismissable-mask="true"
-        :draggable="false"
-        :show-header="false"
-      >
-        <nuc-section-email-us @success="showDialog = false" />
-      </Dialog>
-    </client-only>
   </section>
 </template>
 
@@ -143,7 +129,6 @@ import { pricingCategories, trustItems } from './constants'
 import type { BillingPeriod } from './types'
 import { formatPrice, getLink, getPrice } from './utils'
 
-const showDialog = ref(false)
 const activeCategory = ref('customer')
 const billingPeriod = ref<BillingPeriod>('one-time')
 
