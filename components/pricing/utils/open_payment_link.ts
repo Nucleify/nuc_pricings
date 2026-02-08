@@ -1,8 +1,10 @@
+import { getPaymentLink } from '.'
+
 import type { BillingPeriodType, PricingPlanInterface } from '../types'
 
-export function getPrice(
+export function openPaymentLink(
   plan: PricingPlanInterface,
   billingPeriod: BillingPeriodType
-): number {
-  return billingPeriod === 'monthly' ? plan.monthlyPrice : plan.oneTimePrice
+): void {
+  window.open(getPaymentLink(plan, billingPeriod), '_blank')
 }

@@ -1,7 +1,7 @@
 {
   "name": "nuc_pricings",
   "description": "Module for pricing sections and payment links.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "category": "core",
   "installed": true,
   "enabled": true

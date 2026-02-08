@@ -1,17 +1,17 @@
-export interface PricingFeature {
+export interface PricingFeatureInterface {
   text: string
   included: boolean
   highlight?: boolean
 }
 
-export interface PricingPlan {
+export interface PricingPlanInterface {
   id: string
   name: string
   monthlyPrice: number
   oneTimePrice: number
   currency: string
   description: string
-  features: PricingFeature[]
+  features: PricingFeatureInterface[]
   monthlyLink?: string
   oneTimeLink?: string
   popular?: boolean
@@ -19,12 +19,10 @@ export interface PricingPlan {
   accentColor?: string
 }
 
-export interface PricingCategory {
+export interface PricingCategoryInterface {
   id: string
   name: string
   description: string
   icon: string
-  plans: PricingPlan[]
+  plans: PricingPlanInterface[]
 }
-
-export type BillingPeriod = 'monthly' | 'one-time'

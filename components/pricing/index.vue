@@ -61,6 +61,7 @@
             class="plan-card"
             :class="{ popular: plan.popular }"
             :style="{ '--delay': `${index * 100}ms` }"
+            @click="openPlanDialog(plan)"
           >
             <div v-if="plan.popular" class="popular-badge">
               <Icon name="mdi:star" />
@@ -98,12 +99,11 @@
               </li>
             </ul>
 
-            <ad-anchor
-              :label="plan.popular ? 'Get Started →' : 'Choose Plan'"
+            <ad-button
+              label="Choose Plan"
               class="plan-button"
               :class="{ primary: plan.popular }"
-              :href="getLink(plan, billingPeriod)"
-              target="_blank"
+              @click.stop="openPlanDialog(plan)"
             />
           </div>
         </div>
@@ -119,6 +119,12 @@
 
       <nuc-trust-badges :items="trustItems" />
     </div>
+
+    <nuc-pricing-dialog
+      v-model="showPlanDialog"
+      :plan="selectedPlan"
+      :billing-period="billingPeriod"
+    />
   </section>
 </template>
 
@@ -126,14 +132,23 @@
 import { computed, ref } from 'vue'
 
 import { pricingCategories, trustItems } from './constants'
-import type { BillingPeriod } from './types'
-import { formatPrice, getLink, getPrice } from './utils'
+import { NucPricingDialog } from './dialog'
+import type { BillingPeriodType, PricingPlanInterface } from './types'
+import { formatPrice, getPrice } from './utils'
 
 const activeCategory = ref('customer')
-const billingPeriod = ref<BillingPeriod>('one-time')
+const billingPeriod = ref<BillingPeriodType>('one-time')
+
+const showPlanDialog = ref(false)
+const selectedPlan = ref<PricingPlanInterface | null>(null)
 
 const currentPlans = computed(() => {
   const category = pricingCategories.find((c) => c.id === activeCategory.value)
   return category?.plans || []
 })
+
+function openPlanDialog(plan: PricingPlanInterface): void {
+  selectedPlan.value = plan
+  showPlanDialog.value = true
+}
 </script>

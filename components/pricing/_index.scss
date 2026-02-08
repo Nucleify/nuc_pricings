@@ -1,4 +1,5 @@
 @use 'sass:color';
+@import 'dialog';
 
 #pricing {
   width: calc(100% + 2rem);
@@ -256,16 +257,21 @@
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    background: rgba($primary-color, 0.02);
     border: 1px solid rgba($primary-color, 0.1);
     border-radius: 20px;
     text-align: left;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     animation: plan-card-enter 0.5s ease forwards;
+    cursor: pointer;
     animation-delay: var(--delay, 0ms);
     opacity: 0;
     transform: translateY(20px);
     height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba($primary-color, 0.08) 0%,
+      rgba($primary-color, 0.02) 100%
+    );
 
     &::before {
       content: '';
@@ -280,12 +286,12 @@
     }
 
     &:hover {
-      background: rgba($primary-color, 0.04);
-      border-color: rgba($primary-color, 0.2);
-      transform: translateY(-4px);
+      border-color: rgba($primary-color, 0.35);
+      box-shadow: 0 16px 60px rgba($primary-color, 0.25);
 
       &::before {
         opacity: 1;
+        background: linear-gradient(90deg, transparent, $primary-color, transparent);
       }
     }
 

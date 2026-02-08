@@ -1,6 +1,6 @@
-import type { PricingCategory } from '../types'
+import type { PricingCategoryInterface } from '../types'
 
-export const pricingCategories: PricingCategory[] = [
+export const pricingCategories: PricingCategoryInterface[] = [
   {
     id: 'customer',
     name: 'Customer',
