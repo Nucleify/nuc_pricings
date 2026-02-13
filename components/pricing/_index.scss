@@ -123,7 +123,6 @@
     }
   }
 
-  // Controls wrapper
   .pricing-controls {
     display: flex;
     flex-direction: column;
@@ -132,7 +131,6 @@
     width: 100%;
   }
 
-  // Category Tabs
   .category-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -230,7 +228,6 @@
     }
   }
 
-  // Billing Toggle
   .billing-toggle {
     display: flex;
     gap: 0.25rem;
@@ -241,7 +238,6 @@
     box-shadow: 0 2px 12px rgba($primary-color, 0.08);
   }
 
-  // Plans Grid
   .plans-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -251,7 +247,6 @@
     align-items: stretch;
   }
 
-  // Plan Card
   .plan-card {
     position: relative;
     display: flex;
@@ -445,6 +440,26 @@
     }
   }
 
+  .includes-previous {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin: 1rem 0 0;
+    background: rgba($primary-color, 0.06);
+    border: 1px solid rgba($primary-color, 0.15);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: rgba($white-text-color, 0.7);
+
+    // stylelint-disable-next-line no-descending-specificity
+    .iconify {
+      font-size: 1rem;
+      color: $primary-color;
+      flex-shrink: 0;
+    }
+  }
+
   .plan-features {
     list-style: none;
     padding: 0;
@@ -453,7 +468,6 @@
     flex-direction: column;
     gap: 0.75rem;
     flex-grow: 1;
-    min-height: 200px;
   }
 
   .feature-item {
@@ -482,11 +496,22 @@
       color: $primary-white-green-text-color;
       font-weight: 500;
     }
+
+    &.more-features {
+      color: rgba($primary-color, 0.7);
+      font-size: 0.85rem;
+      font-weight: 500;
+
+      .feature-icon {
+        color: rgba($primary-color, 0.5);
+      }
+    }
   }
 
   .plan-button {
     width: 100%;
     padding: 1rem 1.5rem !important;
+    margin-top: 1rem;
     font-size: 0.95rem !important;
     font-weight: 600 !important;
     background: rgba($primary-color, 0.1) !important;
@@ -516,7 +541,6 @@
     }
   }
 
-  // Contract note (between plans and footer)
   .contract-note {
     display: flex;
     align-items: center;
@@ -554,7 +578,6 @@
     }
   }
 
-  // Trust Strip
   .trust-strip {
     display: flex;
     flex-direction: column;
@@ -595,7 +618,6 @@
     display: none;
   }
 
-  // Slide fade transition
   .slide-fade-enter-active {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -614,7 +636,6 @@
     transform: translateY(10px);
   }
 
-  // Fade transition
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -626,7 +647,6 @@
     transform: translateY(10px);
   }
 
-  // Responsive
   @media (min-width: $sm) {
     .pricing-heading {
       font-size: 2rem;

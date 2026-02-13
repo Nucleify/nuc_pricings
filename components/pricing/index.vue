@@ -86,7 +86,7 @@
 
             <ul class="plan-features">
               <li
-                v-for="(feature, fIndex) in plan.features"
+                v-for="(feature, fIndex) in plan.features.slice(0, 5)"
                 :key="fIndex"
                 class="feature-item"
                 :class="{ included: feature.included, highlight: feature.highlight }"
@@ -97,7 +97,17 @@
                 />
                 <span>{{ feature.text }}</span>
               </li>
+
+              <li v-if="plan.features.length > 5" class="feature-item more-features">
+                <Icon name="mdi:plus-circle-outline" class="feature-icon" />
+                <span>+{{ plan.features.length - 5 }} more</span>
+              </li>
             </ul>
+
+            <p v-if="index > 0" class="includes-previous">
+              <Icon name="mdi:layers-outline" />
+              <span>Includes all {{ currentPlans[index - 1].name }} features</span>
+            </p>
 
             <ad-button
               label="Choose Plan"
@@ -124,6 +134,7 @@
       v-model="showPlanDialog"
       :plan="selectedPlan"
       :billing-period="billingPeriod"
+      :previous-plan-name="previousPlanName"
     />
   </section>
 </template>
@@ -141,14 +152,25 @@ const billingPeriod = ref<BillingPeriodType>('one-time')
 
 const showPlanDialog = ref(false)
 const selectedPlan = ref<PricingPlanInterface | null>(null)
+const selectedPlanIndex = ref(-1)
 
 const currentPlans = computed(() => {
   const category = pricingCategories.find((c) => c.id === activeCategory.value)
   return category?.plans || []
 })
 
+const previousPlanName = computed(() => {
+  if (selectedPlanIndex.value > 0) {
+    return currentPlans.value[selectedPlanIndex.value - 1]?.name ?? null
+  }
+  return null
+})
+
 function openPlanDialog(plan: PricingPlanInterface): void {
   selectedPlan.value = plan
+  selectedPlanIndex.value = currentPlans.value.findIndex(
+    (p) => p.id === plan.id
+  )
   showPlanDialog.value = true
 }
 </script>

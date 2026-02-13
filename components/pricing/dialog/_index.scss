@@ -29,7 +29,9 @@
     border-left: 1px solid rgba($primary-color, 0.2) !important;
     border-right: 1px solid rgba($primary-color, 0.2) !important;
     padding: 1rem 1.5rem !important;
-    overflow: scroll !important;
+    overflow: hidden auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba($primary-color, 0.25) transparent;
   }
 
   .p-dialog-footer {
@@ -111,6 +113,26 @@
     }
   }
 
+  .plan-dialog-includes-previous {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    background: rgba($primary-color, 0.06);
+    border: 1px solid rgba($primary-color, 0.15);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: rgba($white-text-color, 0.7);
+
+    // stylelint-disable-next-line no-descending-specificity
+    .iconify {
+      font-size: 1rem;
+      color: $primary-color;
+      flex-shrink: 0;
+    }
+  }
+
   .plan-dialog-content {
     max-height: 35vh;
     overflow-y: auto;
@@ -142,36 +164,58 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
 
     li {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       font-size: 0.85rem;
+      line-height: 1.3;
       color: rgba($white-text-color, 0.8);
-      padding: 0.4rem 0.6rem;
-      background: rgba($primary-color, 0.03);
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      padding: 0.4rem 0;
 
       // stylelint-disable-next-line no-descending-specificity
       .iconify {
         color: $primary-color;
-        font-size: 1rem;
+        font-size: 1.05rem;
         flex-shrink: 0;
       }
 
       &.highlight {
-        background: rgba($primary-color, 0.08);
         color: $white-text-color;
+        font-weight: 500;
+      }
+    }
 
-        .iconify {
-          color: $primary-color;
-        }
+    .show-more-features {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: rgba($primary-color, 0.05);
+      border: 1px dashed rgba($primary-color, 0.2);
+      border-radius: 8px;
+      color: rgba($white-text-color, 0.7);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      .iconify {
+        font-size: 1rem;
+        color: $primary-color;
+      }
+
+      &:hover {
+        background: rgba($primary-color, 0.1);
+        border-color: rgba($primary-color, 0.3);
+        color: $white-text-color;
       }
     }
   }
