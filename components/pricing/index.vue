@@ -3,18 +3,19 @@
     <div class="pricing-glow"></div>
     <div class="pricing-container container">
       <div class="pricing-header">
-        <nuc-shiny-badge icon="mdi:tag-outline" label="PRICING PLANS" />
+        <nuc-shiny-badge icon="mdi:tag-outline" :label="$t('pricing-badge')" />
         <h2 class="pricing-heading">
-          Choose the perfect plan for
-          <span class="highlight">your journey.</span>
+          {{ $t('pricing-heading-prefix') }}
+          <span class="highlight">{{ $t('pricing-heading-highlight') }}</span>
         </h2>
         <p class="pricing-description">
-          Flexible pricing that scales with your needs. No hidden fees. <span class="vat-note">VAT included.</span>
+          {{ $t('pricing-description') }}
+          <span class="vat-note">{{ $t('pricing-vat-note') }}</span>
         </p>
-        <nuc-section-email-us-dialog 
+        <nuc-section-email-us-dialog
           button-class="ask-sticker"
-          button-label="Need help choosing?"
-          button-strong="Let's talk!"
+          :button-label="$t('pricing-help-choosing')"
+          :button-strong="$t('pricing-lets-talk')"
         />
       </div>
 
@@ -26,7 +27,7 @@
             @click="billingPeriod = 'monthly'"
           >
             <Icon name="mdi:calendar-month" />
-            <span>Monthly</span>
+            <span>{{ $t('pricing-billing-monthly') }}</span>
           </button>
           <button
             class="billing-option"
@@ -34,8 +35,8 @@
             @click="billingPeriod = 'one-time'"
           >
             <Icon name="mdi:lightning-bolt" />
-            <span>One-time</span>
-            <span class="save-badge">Save 20%</span>
+            <span>{{ $t('pricing-billing-one-time') }}</span>
+            <span class="save-badge">{{ $t('pricing-save-badge') }}</span>
           </button>
         </div>
 
@@ -65,7 +66,7 @@
           >
             <div v-if="plan.popular" class="popular-badge">
               <Icon name="mdi:star" />
-              <span>Most Popular</span>
+              <span>{{ $t('pricing-most-popular') }}</span>
             </div>
 
             <div class="plan-header">
@@ -81,7 +82,13 @@
                 <span class="currency">{{ plan.currency }}</span>
                 <span class="amount">{{ formatPrice(getPrice(plan, billingPeriod)) }}</span>
               </div>
-              <span class="period">{{ billingPeriod === 'monthly' ? 'per month' : 'one-time payment' }}</span>
+              <span class="period">
+                {{
+                  billingPeriod === 'monthly'
+                    ? $t('pricing-period-month')
+                    : $t('pricing-period-one-time')
+                }}
+              </span>
             </div>
 
             <ul class="plan-features">
@@ -100,17 +107,23 @@
 
               <li v-if="plan.features.length > 5" class="feature-item more-features">
                 <Icon name="mdi:plus-circle-outline" class="feature-icon" />
-                <span>+{{ plan.features.length - 5 }} more</span>
+                <span>{{
+                  $t('pricing-more-features', { count: plan.features.length - 5 })
+                }}</span>
               </li>
             </ul>
 
             <p v-if="index > 0" class="includes-previous">
               <Icon name="mdi:layers-outline" />
-              <span>Includes all {{ currentPlans[index - 1].name }} features</span>
+              <span>{{
+                $t('pricing-includes-all-features', {
+                  plan: currentPlans[index - 1].name,
+                })
+              }}</span>
             </p>
 
             <ad-button
-              label="Choose Plan"
+              :label="$t('pricing-choose-plan')"
               class="plan-button"
               :class="{ primary: plan.popular }"
               @click.stop="openPlanDialog(plan)"
@@ -122,8 +135,8 @@
       <Transition name="slide-fade">
         <p v-if="billingPeriod === 'monthly'" class="contract-note">
           <Icon name="mdi:file-document-outline" />
-          Monthly plans require a minimum 6-month commitment.
-          <span class="note-highlight">Cancel anytime after.</span>
+          {{ $t('pricing-contract-note') }}
+          <span class="note-highlight">{{ $t('pricing-contract-note-highlight') }}</span>
         </p>
       </Transition>
 
@@ -141,11 +154,17 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-import { pricingCategories, trustItems } from './constants'
+import { getPricingCategories, getTrustItems } from './constants'
 import { NucPricingDialog } from './dialog'
 import type { BillingPeriodType, PricingPlanInterface } from './types'
 import { formatPrice, getPrice } from './utils'
+
+const { t } = useI18n()
+
+const pricingCategories = computed(() => getPricingCategories(t))
+const trustItems = computed(() => getTrustItems(t))
 
 const activeCategory = ref('customer')
 const billingPeriod = ref<BillingPeriodType>('one-time')
@@ -155,7 +174,9 @@ const selectedPlan = ref<PricingPlanInterface | null>(null)
 const selectedPlanIndex = ref(-1)
 
 const currentPlans = computed(() => {
-  const category = pricingCategories.find((c) => c.id === activeCategory.value)
+  const category = pricingCategories.value.find(
+    (c) => c.id === activeCategory.value
+  )
   return category?.plans || []
 })
 

@@ -29,17 +29,21 @@
           <div class="plan-dialog-price">
             <span class="currency">{{ plan.currency }}</span>
             <span class="amount">{{ formatPrice(getPrice(plan, billingPeriod)) }}</span>
-            <span class="period">{{ billingPeriod === 'monthly' ? '/month' : ' one-time' }}</span>
+            <span class="period">{{
+              billingPeriod === 'monthly'
+                ? t('pricing-dialog-period-month')
+                : t('pricing-dialog-period-one-time')
+            }}</span>
           </div>
         </div>
 
-        <h4>What's included:</h4>
+        <h4>{{ t('pricing-dialog-whats-included') }}</h4>
       </template>
 
       <div class="plan-dialog-content">
         <div v-if="previousPlanName" class="plan-dialog-includes-previous">
           <Icon name="mdi:arrow-up-circle-outline" />
-          <span>Everything in {{ previousPlanName }}, plus:</span>
+          <span>{{ t('pricing-dialog-everything-plus', { plan: previousPlanName }) }}</span>
         </div>
 
         <div class="plan-dialog-benefits">
@@ -60,7 +64,11 @@
             @click="showAllFeatures = true"
           >
             <Icon name="mdi:chevron-down" />
-            <span>Show {{ remainingFeaturesCount }} more features</span>
+            <span>{{
+              t('pricing-dialog-show-more-features', {
+                count: remainingFeaturesCount,
+              })
+            }}</span>
           </button>
         </div>
       </div>
@@ -68,14 +76,14 @@
       <template #footer>
         <div class="plan-dialog-footer-wrapper">
           <ad-button
-            label="Proceed to Payment →"
+            :label="t('pricing-dialog-proceed-payment')"
             class="plan-dialog-button"
             @click="openPaymentLink(plan, billingPeriod)"
           />
 
           <p v-if="billingPeriod === 'monthly'" class="plan-dialog-note">
             <Icon name="mdi:information-outline" />
-            6-month minimum commitment. Cancel anytime after.
+            {{ t('pricing-dialog-monthly-note') }}
           </p>
         </div>
       </template>
@@ -85,12 +93,14 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import { formatPrice, getPrice, openPaymentLink } from '../utils'
 import type { PricingDialogInterface } from './types'
 
 const props = defineProps<PricingDialogInterface>()
 const emit = defineEmits(['update:modelValue'])
+const { t } = useI18n()
 
 const FEATURES_LIMIT = 6
 const showAllFeatures = ref(false)
