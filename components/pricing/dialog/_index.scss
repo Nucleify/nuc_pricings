@@ -2,6 +2,8 @@
   width: 95vw !important;
   max-width: 480px !important;
   max-height: 80vh !important;
+  border: none;
+  border-radius: 20px;
 
   .p-dialog-header {
     display: flex;
@@ -21,6 +23,12 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       margin: 0 0 0.5rem;
+    }
+
+    &-actions {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
     }
   }
 
