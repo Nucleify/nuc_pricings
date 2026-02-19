@@ -75,10 +75,11 @@
 
       <template #footer>
         <div class="plan-dialog-footer-wrapper">
-          <ad-button
-            :label="t('pricing-dialog-proceed-payment')"
+          <nuc-submit-button
+            :label="t('pricing-dialog-contact-email')"
             class="plan-dialog-button"
-            @click="openPaymentLink(plan, billingPeriod)"
+            icon="mdi:email-outline"
+            @click="showEmailDialog = true"
           />
 
           <p v-if="billingPeriod === 'monthly'" class="plan-dialog-note">
@@ -88,6 +89,23 @@
         </div>
       </template>
     </Dialog>
+
+    <Dialog
+      v-model:visible="showEmailDialog"
+      :modal="true"
+      :dismissable-mask="true"
+      :draggable="false"
+      class="pricing-email-dialog"
+      :pt="{
+        pcCloseButton: {
+          root: {
+          'ad-type': 'main',
+          }
+        }
+      }"
+    >
+      <nuc-section-email-us @success="handleEmailSuccess" />
+    </Dialog>
   </client-only>
 </template>
 
@@ -95,15 +113,21 @@
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { formatPrice, getPrice, openPaymentLink } from '../utils'
+import { formatPrice, getPrice } from '../utils'
 import type { PricingDialogInterface } from './types'
 
 const props = defineProps<PricingDialogInterface>()
 const emit = defineEmits(['update:modelValue'])
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const FEATURES_LIMIT = 6
 const showAllFeatures = ref(false)
+const showEmailDialog = ref(false)
+
+function handleEmailSuccess(): void {
+  showEmailDialog.value = false
+  window.location.href = `/${locale.value}/thank-you`
+}
 
 const visible = computed({
   get: () => props.modelValue,

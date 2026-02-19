@@ -122,7 +122,7 @@
               }}</span>
             </p>
 
-            <ad-button
+            <nuc-submit-button
               :label="$t('pricing-choose-plan')"
               class="plan-button"
               :class="{ primary: plan.popular }"

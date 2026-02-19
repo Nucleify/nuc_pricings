@@ -16,7 +16,7 @@
     padding: 0 !important;
     flex-shrink: 0;
 
-    > h4 {
+    >h4 {
       font-size: 0.8rem;
       font-weight: 600;
       color: rgba($white-text-color, 0.7);
@@ -239,20 +239,8 @@
   .plan-dialog-button {
     width: 100%;
     padding: 0.875rem 1.25rem !important;
-    font-size: 0.95rem !important;
-    font-weight: 700 !important;
-    border-radius: 10px !important;
-    color: #000 !important;
-    box-shadow: 0 4px 20px rgba($primary-color, 0.4);
-    transition: all 0.3s ease;
-    text-align: center;
-    display: block;
-    text-decoration: none;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba($primary-color, 0.5);
-    }
+    border-radius: 0.5rem !important;
+    margin-top: 0;
   }
 
   .plan-dialog-note {
