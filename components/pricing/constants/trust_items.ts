@@ -1,6 +1,6 @@
 import type { Composer } from 'vue-i18n'
 
-import type { NucTrustBadgeItemInterface } from 'atomic'
+import type { NucTrustBadgeItemInterface } from 'nucleify'
 
 export function getTrustItems(t: Composer['t']): NucTrustBadgeItemInterface[] {
   return [
